@@ -39,7 +39,7 @@ public class LoginController {
 			redir.addFlashAttribute("loginError","Erro. Usuário ou senha inválidos. </ br>" + req.getRemoteAddr());
 			return "redirect:login";
 		}
-		logger.info("O usuario "+ usuario.getNome()+" logou-se no sistema com o IP: "+req.getRemoteAddr());
+			logger.error("O usuario "+ usuario.getNome()+" logou-se no sistema com o IP: "+req.getRemoteAddr());
 		session.setAttribute("usuarioLogado", usuario);
 		return "home";
 
