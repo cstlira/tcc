@@ -35,11 +35,11 @@ public class LoginController {
 		Usuario usuario = dao.loginUser(login, password);
 		
 		if (usuario == null) {
-			logger.info("Alguém tentou logar-se no sistema com as credenciais "+login+"/"+password+" usando o IP: "+req.getRemoteAddr());
+			logger.error("Alguém tentou logar-se no sistema com as credenciais "+login+"/"+password+" usando o IP: "+req.getRemoteAddr());
 			redir.addFlashAttribute("loginError","Erro. Usuário ou senha inválidos. </ br>" + req.getRemoteAddr());
 			return "redirect:login";
 		}
-			logger.error("O usuario "+ usuario.getNome()+" logou-se no sistema com o IP: "+req.getRemoteAddr());
+			logger.info("O usuario "+ usuario.getNome()+" logou-se no sistema com o IP: "+req.getRemoteAddr());
 		session.setAttribute("usuarioLogado", usuario);
 		return "home";
 
