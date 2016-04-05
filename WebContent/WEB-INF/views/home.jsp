@@ -130,7 +130,7 @@
                         <a  href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i> Cliente <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="#" onclick="call('CadastroCliente?tipoCliente','GET','#content');" >Cadastro</a>
+                                <a href="#" onclick="call('cadastroCliente','GET','#content');" >Cadastro</a>
                             </li>
                         </ul>
                     </li>

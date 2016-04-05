@@ -26,26 +26,38 @@ public class ClienteController {
 	@Autowired
 	JdbcClienteDao dao;
 
-	@RequestMapping(value = "CadastroCliente", method = RequestMethod.GET)
-	public String formCadastro(Model model, Cliente c, @RequestParam String tipoCliente) {
+	
+	@RequestMapping(value = "cadastroCliente", method = RequestMethod.GET)
+	public String formCadastro(Model model, Cliente c) {
 		model.addAttribute("cliente", c);
-
+		return "cliente/form_cliente";
+	}
+	
+	
+	
+	@RequestMapping(value = "formCadastroCliente", method = RequestMethod.GET)
+	public String returnFormCadastro(Model model, Cliente c, @RequestParam String tipoCliente) {
+		model.addAttribute("cliente", c);
 		if (tipoCliente.equals("pf")) {
 			model.addAttribute("tipoCliente", tipoCliente);
+			return "cliente/form_cadastro_pf";
 		} else if (tipoCliente.equals("pj")) {
 			model.addAttribute("tipoCliente", tipoCliente);
+			return "cliente/form_cadastro_pj";
 		}
-
-		return "cliente/form_cadastro";
+		return null;
 	}
+	
 
 	/* CADASTRA PESSOA FISICA. (ADICIONAR VALIDAÇÃO DOS DADOS) */
-	@RequestMapping(value = "CadastroCliente", method = RequestMethod.POST)
-	public String adicionaCliente(Model model, Cliente c, RedirectAttributes redir) {
+	@RequestMapping(value = "formCadastroCliente", method = RequestMethod.POST)
+	public String formCadastroSubmit(Model model, Cliente c, RedirectAttributes redir) {
 		dao.adiciona(c);
 	    redir.addFlashAttribute("cliente",c);
 		return "redirect:/Home";
 	}
+	
+
 
 	/* MOSTRA FORM PARA EDITAR CADASTRO DE PESSOA FISICA */
 	

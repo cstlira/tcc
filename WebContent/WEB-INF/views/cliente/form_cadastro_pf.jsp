@@ -18,7 +18,7 @@
 			<br /> <br />
 			
 			<form:form class="form-horizontal"
-				action="CadastroCliente" modelAttribute="cliente"
+				action="formCadastroCliente" modelAttribute="cliente"
 				method="post" id="cadastro">
 				<fieldset>
 					<!-- Form Name -->
@@ -161,5 +161,17 @@
 	
 
 </div>
+<script type="text/javascript">
+$("#cep").focusout(function() {
+	$.ajax({
+		url : "http://api.postmon.com.br/v1/cep/" + $("#cep").val()
+	}).then(function(e) {
+		$('#logradouro').val(e.logradouro);
+		$('#bairro').val(e.bairro);
+		$('#cidade').val(e.cidade);
+		$('#estado').val(e.estado);
+	});
+});
+</script>
 </body>
 </html>

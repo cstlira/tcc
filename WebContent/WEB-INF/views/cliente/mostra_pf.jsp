@@ -11,7 +11,8 @@
   <form:form action="/cliente/edita/${id}" method="post" modelAttribute="cliente">
       <table>
           <tr>
-              <form:input path="id" class="form-control input-lg" hidden />
+              <form:input path="id" class="form-control input-lg"  type="hidden" />
+              
               <td>Nome:</td>
               <td><form:input path="nome" class="form-control input-lg" /></td>
           </tr>
