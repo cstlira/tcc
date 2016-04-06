@@ -30,9 +30,9 @@
 		<property name="password" value="root" />
 	</bean>
 	
-	
+	<!-- 
 	<mvc:interceptors>
 		<bean class="br.estacio.tcc.interceptor.AutorizadorInterceptor" />
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 
 </beans>

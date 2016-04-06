@@ -7,16 +7,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import br.estacio.tcc.modelo.Cliente;
 import br.estacio.tcc.modelo.Endereco;
+import br.estacio.tcc.modelo.Usuario;
 
 @Repository
 public class JdbcClienteDao {
@@ -92,7 +98,7 @@ public class JdbcClienteDao {
 		return cliente;
 	}
 
-	public Cliente getCliente(Long id) {
+	public Cliente buscaClientePorId(Long id) {
 		// TODO Auto-generated method stub
 
 		try {
@@ -114,6 +120,15 @@ public class JdbcClienteDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	
+	public List<Cliente> buscaClientePorNome(String nome){
+
+		System.out.println("cliente "+ nome +" recebido. fazendo busca...");
+		String sql="select * from clientes where nome like ? ";
+		return this.jdbcTemplate.query(sql,new String[]{"%"+nome+"%"}, new ClienteMapper());
+	
 	}
 
 	public void atualiza(Cliente c) {
@@ -143,6 +158,31 @@ public class JdbcClienteDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	
+	
+	private static final class ClienteMapper implements RowMapper<Cliente> {
+
+	    public Cliente mapRow(ResultSet rs, int rowNum) throws SQLException {
+	        Cliente cliente = new Cliente();
+	        cliente.setEndereco(new Endereco());
+	        cliente.setId(rs.getLong("id"));
+	        cliente.setNome(rs.getString("nome"));
+	        cliente.setEmail(rs.getString("email"));
+	        cliente.setTelefone(rs.getString("telefone"));
+	        cliente.setCnpj(rs.getString("cnpj"));
+	        cliente.setCpf(rs.getString("cpf"));
+	        cliente.setCpf(rs.getString("cep"));
+	        cliente.getEndereco().setLogradouro(rs.getString("logradouro"));
+	        cliente.getEndereco().setNumero(rs.getString("numero"));
+	        cliente.getEndereco().setComplemento(rs.getString("complemento"));
+	        cliente.getEndereco().setReferencia(rs.getString("referencia"));
+	        cliente.getEndereco().setBairro(rs.getString("bairro"));
+	        cliente.getEndereco().setCidade(rs.getString("cidade"));
+	        cliente.getEndereco().setEstado(rs.getString("estado"));
+	        return cliente;
+	    }
 	}
 
 }
