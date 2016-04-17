@@ -5,10 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="res" tagdir="/WEB-INF/tags" %>
-<script type="text/javascript" src="resources/js/jquery.validate.min.js"></script>
-<res:resources />
 </head>
 <body>
 		<div class="panel panel-default">
@@ -18,7 +17,7 @@
 			<br /> <br />
 			
 			<form:form class="form-horizontal"
-				action="formCadastroCliente" modelAttribute="cliente"
+				action="CadastroCliente" modelAttribute="cliente"
 				method="post" id="cadastro">
 				<fieldset>
 					<!-- Form Name -->
@@ -63,9 +62,16 @@
 							<form:input path="cpf" id="cpf" name="cpf" type="text"
 								placeholder="Digite um CPF válido" class="form-control input-md"
 								required="" maxlength="14"/>
+								
+						<spring:bind path="cpf">
+						  <c:if test="${status.error}">
+    						<p class="text-danger"><c:out value="${status.errorMessage}" /></p>
+						  </c:if>
+						</spring:bind>
 
 						</div>
 					</div>
+					
 
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="cep">CEP*</label>
@@ -149,13 +155,14 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="submit"></label>
 						<div class="col-md-4">
-							<input type="submit" name="submit" class="btn btn-inverse"
+							<input type="submit" name="submit" class="btn btn-default"
 								value="Cadastrar" />
 						</div>
 					</div>
 
 				</fieldset>
-				<res:validacao_pf />
+				
+			<res:validacao_pf />
 			</form:form>
 			
 	

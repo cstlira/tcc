@@ -37,12 +37,10 @@ public class JdbcUsuarioDao {
 	
 	
 	public Usuario findUserByLogin(String login) {
-		
-		
 		try{
 		Usuario user = this.jdbcTemplate.queryForObject(
 		        "select * from usuarios where login=?",
-		        new Object[]{login},
+		        new String[]{login},
 		        new RowMapper<Usuario>() {
 		            public Usuario mapRow(ResultSet rs, int rowNum) throws SQLException {
 		        		Usuario user = new Usuario();
@@ -52,11 +50,7 @@ public class JdbcUsuarioDao {
 		            	user.setPassword(rs.getString("password"));
 		            	user.setNivel(rs.getInt("nivel"));
 		            	user.setSenhaexpirada(rs.getBoolean("senhaexpirada"));
-
 						return user;
-						
-
-						
 		            }});
 						return user;	
 						} catch (EmptyResultDataAccessException e) {
@@ -64,35 +58,5 @@ public class JdbcUsuarioDao {
 						}
 						}
 	
-
-	public Usuario getUsuario(Usuario usuario) { 
-		
-		if(usuario == null) {
-			throw new IllegalArgumentException("Usuário não deve ser nulo");
-		}
-
-
-				Usuario user = this.jdbcTemplate.queryForObject(
-						
-		        "select * from usuarios where login=? and password=?",
-		        
-		        new Object[]{usuario.getLogin(),usuario.getPassword()},
-		        new RowMapper<Usuario>() {
-		            public Usuario mapRow(ResultSet rs, int rowNum) throws SQLException {
-		        		Usuario user = new Usuario();
-		            	if(rs.next()){
-		            	user.setId(rs.getLong("id"));
-		            	user.setLogin(rs.getString("login"));
-		            	user.setPassword(rs.getString("password"));
-		            	user.setNivel(rs.getInt("nivel"));
-		            	user.setSenhaexpirada(rs.getBoolean("senhaexpirada"));
-						return user;
-		            }
-						return user;}
-						
-		        });
-				return user;
-				
-	
-} }
+ }
 

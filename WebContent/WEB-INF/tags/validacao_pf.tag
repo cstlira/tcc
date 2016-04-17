@@ -26,8 +26,6 @@
 				    "Entrada inválida."
 				);
 			
-			
-			
 			$.validator.addMethod("cpf", function(value, element) {
 				
 				   	value = jQuery.trim(value);
@@ -63,7 +61,7 @@
 		
 			$("#cadastro").validate({
 				rules: {
-					nome: {required: true, regex: /^[a-zA-Z\s\u00C0-\u00FF]*$/},
+					nome: {required: true, minlength:5, regex: /^[a-zA-Z\s\u00C0-\u00FF]*$/},
 					email: {regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ },
 					telefone: {required: true, regex:/^[()\d-\s]+$/, minlength:14},
 					cpf: {required: true, regex:  /^([0-9]{3}\.){2}([0-9]{3}-)([0-9]{2})$/, minlength:11, cpf: true},
@@ -141,6 +139,7 @@
 			})
 		});
 </script>
+
 
 
 

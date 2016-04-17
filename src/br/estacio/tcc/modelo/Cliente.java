@@ -1,5 +1,7 @@
 package br.estacio.tcc.modelo;
 
+import java.sql.Timestamp;
+
 public class Cliente {
 
 	private Long id;
@@ -9,7 +11,10 @@ public class Cliente {
 	private String email;
 	private String cnpj;
 	private String cpf;
+	private Timestamp dataCadastro;
+	private Boolean ativo;
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -64,6 +69,41 @@ public class Cliente {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	
+	public Timestamp getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Timestamp dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	
+	public boolean isPessoaFisica(){
+		if(this.cpf == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public void reset(){
+		this.id=null;
+		this.nome=null;
+		this.telefone=null;
+		this.endereco=null;
+		this.email=null;
+		this.cnpj=null;
+		this.cpf=null;
 	}
 
 }

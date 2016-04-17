@@ -146,7 +146,7 @@
 				unhighlight: function ( element, errorClass, validClass ) {
 					$( element ).parents( ".col-md-5" ).addClass( "has-success" ).removeClass( "has-error" );
 					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
-				} /*,
+				}, /*
 				
 				submitHandler: function(e) {
 				    var url = "CadastroCliente";
@@ -160,10 +160,10 @@
 				           }
 				         });
 				    return false;
-				} */
+				}   */
 				
 				
-			} );
+			})
 		} );
 </script>
 

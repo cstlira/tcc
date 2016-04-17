@@ -10,7 +10,7 @@
 <res:resources />
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="margin-top: 100px;">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
             			<c:if test="${not empty loginError}">
@@ -24,7 +24,7 @@
                         <h3 class="panel-title"><strong>LOGIN</strong></h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="login" method="post">
+                        <form role="form" action="Login" method="post">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Nome de usuário" name="login" type="login" autofocus>
@@ -33,7 +33,7 @@
                                     <input class="form-control" placeholder="Senha" name="password" type="password" value="">
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <input type="submit" class="btn btn-lg btn-success btn-block">
+                                <input type="submit" class="btn btn-lg btn-success btn-block" value="Entrar">
                             </fieldset>
                         </form>
                     </div>

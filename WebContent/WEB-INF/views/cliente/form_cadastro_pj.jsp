@@ -7,8 +7,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="res" tagdir="/WEB-INF/tags" %>
-<script type="text/javascript" src="resources/js/jquery.validate.min.js"></script>
-<res:resources />
 </head>
 <body>
 		<div class="panel panel-default">
@@ -18,7 +16,7 @@
 			<br /> <br />
 			
 			<form:form class="form-horizontal"
-				action="formCadastroCliente" modelAttribute="cliente"
+				action="CadastroCliente" modelAttribute="cliente"
 				method="post" id="cadastro">
 				<fieldset>
 					<!-- Form Name -->
@@ -64,6 +62,7 @@
 							<form:input path="cnpj" id="cnpj" name="cnpj" type="text"
 								placeholder="Digite um CNPJ válido" class="form-control input-md"
 								required="" maxlength="18"/>
+							<form:errors path="cnpj"></form:errors>
 
 						</div>
 					</div>
@@ -150,13 +149,13 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="submit"></label>
 						<div class="col-md-4">
-							<input type="submit" name="submit" class="btn btn-inverse"
+							<input type="submit" name="submit" class="btn btn-default"
 								value="Cadastrar" />
 						</div>
 					</div>
 
 				</fieldset>
-				<res:validacao_pj />
+				<res:validacao_pj /> 
 			</form:form>
 
 

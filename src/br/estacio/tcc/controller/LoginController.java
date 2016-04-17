@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,32 +25,32 @@ public class LoginController {
 	JdbcUsuarioDao dao;
 	
 
-	@RequestMapping(value="login", method=RequestMethod.GET)
+	@RequestMapping(value="Login", method=RequestMethod.GET)
 	public String showLoginForm() {
 		return "login";
 	}
 	
-	@RequestMapping(value="login", method=RequestMethod.POST)
-	public String verifyLogin(@RequestParam String login, @RequestParam String password,HttpServletRequest req, HttpSession session, RedirectAttributes redir) {
+	@RequestMapping(value="Login", method=RequestMethod.POST)
+	public String verifyLogin(@RequestParam String login, @RequestParam String password,HttpServletRequest req, HttpSession session, RedirectAttributes redir, Model model) {
 		
 		Usuario usuario = dao.loginUser(login, password);
 		
 		if (usuario == null) {
 			logger.error("Alguém tentou logar-se no sistema com as credenciais "+login+"/"+password+" usando o IP: "+req.getRemoteAddr());
 			redir.addFlashAttribute("loginError","Erro. Usuário ou senha inválidos. </ br>" + req.getRemoteAddr());
-			return "redirect:login";
+			return "redirect:Login";
 		}
 			logger.info("O usuario "+ usuario.getNome()+" logou-se no sistema com o IP: "+req.getRemoteAddr());
-		session.setAttribute("usuarioLogado", usuario);
-		return "home";
+			session.setAttribute("usuarioLogado", usuario);
+			return "redirect:Home";
 
 	}
 	
 	
-	@RequestMapping("efetuaLogout")
+	@RequestMapping("Logout")
 	public String efetuaLogout(HttpSession session) {
 		session.invalidate();
-		return "redirect:login";
+		return "redirect:Login";
 	}
 	
 	
