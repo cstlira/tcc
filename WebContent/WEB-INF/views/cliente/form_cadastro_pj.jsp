@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="res" tagdir="/WEB-INF/tags" %>
 </head>
 <body>
 		<div class="panel panel-default">
@@ -155,23 +154,12 @@
 					</div>
 
 				</fieldset>
-				<res:validacao_pj /> 
 			</form:form>
 
 
 </div>
-
-<script type="text/javascript">
-$("#cep").focusout(function() {
-	$.ajax({
-		url : "http://api.postmon.com.br/v1/cep/" + $("#cep").val()
-	}).then(function(e) {
-		$('#logradouro').val(e.logradouro);
-		$('#bairro').val(e.bairro);
-		$('#cidade').val(e.cidade);
-		$('#estado').val(e.estado);
-	});
-});
-</script>
+<script type="text/javascript" src="resources/js/jquery.validate.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="resources/js/jquery.mask.js" charset="utf-8"></script>
+<script type="text/javascript" src="resources/js/validacao_pj.js" charset="utf-8"></script>
 </body>
 </html>

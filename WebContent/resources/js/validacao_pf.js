@@ -1,16 +1,6 @@
-<%@ tag language="java" pageEncoding="ISO-8859-1"%>
-
-
-<!--  JAVASCRIPT PARA VALIDA«√O DO FORM DE CADASTRO PF -->
-
-<script type="text/javascript" src="resources/js/jquery.validate.min.js"></script>
-<script type="text/javascript" src="resources/js/jquery.mask.js"></script>
-
-	<script type="text/javascript">
-	
-		$( document ).ready( function () {
+$( document ).ready( function () {
 			
-			/* Mascaras p/ formataÁ„o dos campos */
+			/* Mascaras p/ formata√ß√£o dos campos */
 			$('#cep').mask('00000-000');
 			$('#cpf').mask('000.000.000-00', {reverse: true});
 			$('#telefone').mask('(00) 0000-00000');
@@ -23,7 +13,7 @@
 				        var check = false;
 				        return this.optional(element) || regexp.test(value);
 				    },
-				    "Entrada inv·lida."
+				    "Entrada inv√°lida."
 				);
 			
 			$.validator.addMethod("cpf", function(value, element) {
@@ -53,7 +43,7 @@
 
 				    return this.optional(element) || retorno;
 
-				}, "Informe um CPF v·lido");
+				}, "Informe um CPF v√°lido");
 			
 			
 			
@@ -77,11 +67,11 @@
 				
 					messages: {
 					nome: {required: "Por favor, digite seu nome.", regex: "Digite somente caracteres."},
-					email: {regex: "E-mail inv·lido."},
-					telefone: "Por favor, digite um telefone v·lido.",
-					'endereco.cep': {required: "CEP requerido", regex: "CEP inv·lido."},
+					email: {regex: "E-mail inv√°lido."},
+					telefone: "Por favor, digite um telefone v√°lido.",
+					'endereco.cep': {required: "CEP requerido", regex: "CEP inv√°lido."},
 					'endereco.logradouro': {required: "Digite o logradouro."},
-					'endereco.numero': {required: "Digite o n˙mero.", regex: "Digite um n˙mero v·lido."},
+					'endereco.numero': {required: "Digite o n√∫mero.", regex: "Digite um n√∫mero v√°lido."},
 					'endereco.complemento': {regex: "Retire os caracteres especiais."},
 					'endereco.referencia': {regex: "Digite os caracteres especiais."},
 					'endereco.bairro': {required: "Digite o bairro."},
@@ -138,8 +128,16 @@
 				} */
 			})
 		});
-</script>
 
 
 
-
+$("#cep").focusout(function() {
+	$.ajax({
+		url : "http://api.postmon.com.br/v1/cep/" + $("#cep").val()
+	}).then(function(e) {
+		$('#logradouro').val(e.logradouro);
+		$('#bairro').val(e.bairro);
+		$('#cidade').val(e.cidade);
+		$('#estado').val(e.estado);
+	});
+});

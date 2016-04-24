@@ -1,16 +1,6 @@
-<%@ tag language="java" pageEncoding="ISO-8859-1"%>
-
-
-<!--  JAVASCRIPT PARA VALIDA«√O DO FORM DE CADASTRO PF -->
-
-<script type="text/javascript" src="resources/js/jquery.validate.min.js"></script>
-<script type="text/javascript" src="resources/js/jquery.mask.js"></script>
-
-	<script type="text/javascript">
-	
-		$( document ).ready( function () {
+$( document ).ready( function () {
 			
-			/* Mascaras p/ formataÁ„o dos campos */
+			/* Mascaras p/ formata√ß√£o dos campos */
 			$('#cep').mask('00000-000');
 			$('#cnpj').mask('00.000.000/0000-00', {reverse: true});
 			$('#telefone').mask('(00) 0000-00000');
@@ -23,13 +13,13 @@
 				        var check = false;
 				        return this.optional(element) || regexp.test(value);
 				    },
-				    "Entrada inv·lida."
+				    "Entrada inv√°lida."
 				);
 			
 			$.validator.addMethod("cnpj", function(cnpj, element) {
 				   cnpj = jQuery.trim(cnpj);
 					
-					// DEIXA APENAS OS N⁄MEROS
+					// DEIXA APENAS OS N√öMEROS
 				   cnpj = cnpj.replace('/','');
 				   cnpj = cnpj.replace('.','');
 				   cnpj = cnpj.replace('.','');
@@ -83,7 +73,7 @@
 				   }else{
 				      return this.optional(element) || false;
 				   }
-				}, "Informe um CNPJ v·lido."); // Mensagem padr„o
+				}, "Informe um CNPJ v√°lido."); // Mensagem padr√£o
 		
 			
 		
@@ -102,13 +92,13 @@
 					
 				},
 				messages: {
-					nome: {required: "Digite a raz„o social.", regex: "Digite somente letras."},
-					email: {regex: "Por favor, digite um email v·lido."},
-					telefone: "Por favor, digite um telefone v·lido.",
-					cnpj: {required: "Informe o CNPJ.", regex: "Informe o CNPJ.", cnpj: "CNPJ n„o È v·lido."},
-					'endereco.cep': {required: "CEP requerido", regex: "CEP n„o È v·lido."},
+					nome: {required: "Digite a raz√£o social.", regex: "Digite somente letras."},
+					email: {regex: "Por favor, digite um email v√°lido."},
+					telefone: "Por favor, digite um telefone v√°lido.",
+					cnpj: {required: "Informe o CNPJ.", regex: "Informe o CNPJ.", cnpj: "CNPJ n√£o √© v√°lido."},
+					'endereco.cep': {required: "CEP requerido", regex: "CEP n√£o √© v√°lido."},
 					'endereco.logradouro': {required: "Digite o logradouro."},
-					'endereco.numero': {required: "Digite o n˙mero.", regex: "Digite um n˙mero v·lido."},
+					'endereco.numero': {required: "Digite o n√∫mero.", regex: "Digite um n√∫mero v√°lido."},
 					'endereco.bairro': {required: "Digite o bairro."},
 					'endereco.cidade': {required: "Digite a cidade."},
 					
@@ -165,7 +155,14 @@
 				
 			})
 		} );
-</script>
 
-
-
+$("#cep").focusout(function() {
+	$.ajax({
+		url : "http://api.postmon.com.br/v1/cep/" + $("#cep").val()
+	}).then(function(e) {
+		$('#logradouro').val(e.logradouro);
+		$('#bairro').val(e.bairro);
+		$('#cidade').val(e.cidade);
+		$('#estado').val(e.estado);
+	});
+});

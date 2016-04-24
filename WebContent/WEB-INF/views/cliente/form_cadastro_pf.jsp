@@ -7,7 +7,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="res" tagdir="/WEB-INF/tags" %>
 </head>
 <body>
 		<div class="panel panel-default">
@@ -161,24 +160,13 @@
 					</div>
 
 				</fieldset>
-				
-			<res:validacao_pf />
 			</form:form>
 			
 	
 
 </div>
-<script type="text/javascript">
-$("#cep").focusout(function() {
-	$.ajax({
-		url : "http://api.postmon.com.br/v1/cep/" + $("#cep").val()
-	}).then(function(e) {
-		$('#logradouro').val(e.logradouro);
-		$('#bairro').val(e.bairro);
-		$('#cidade').val(e.cidade);
-		$('#estado').val(e.estado);
-	});
-});
-</script>
+<script type="text/javascript" src="resources/js/jquery.validate.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="resources/js/jquery.mask.js" charset="utf-8"></script>
+<script type="text/javascript" src="resources/js/validacao_pf.js" charset="utf-8"></script>
 </body>
 </html>
