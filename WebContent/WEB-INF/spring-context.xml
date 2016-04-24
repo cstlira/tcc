@@ -36,5 +36,6 @@
 	<mvc:interceptors>
 		<bean class="br.estacio.tcc.interceptor.AutorizadorInterceptor" />
 	</mvc:interceptors> 
+	
 
 </beans>

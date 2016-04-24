@@ -40,9 +40,23 @@ public class LoginController {
 			redir.addFlashAttribute("loginError","Erro. Usuário ou senha inválidos. </ br>" + req.getRemoteAddr());
 			return "redirect:Login";
 		}
+		
+		
 			logger.info("O usuario "+ usuario.getNome()+" logou-se no sistema com o IP: "+req.getRemoteAddr());
 			session.setAttribute("usuarioLogado", usuario);
+			
+			String url = null;
+			if(session.getAttribute("url")!=null) {
+			url = (String) session.getAttribute("url");
+			}
+			
+			
+			if(url!=null && !url.contains("Login")) {
+			return "redirect:"+url;
+			}
+			
 			return "redirect:Home";
+			
 
 	}
 	
@@ -51,6 +65,12 @@ public class LoginController {
 	public String efetuaLogout(HttpSession session) {
 		session.invalidate();
 		return "redirect:Login";
+	}
+	
+	/* Pagina Principal */
+	@RequestMapping(value = "Home")
+	public String listaMenu() {
+		return "home";
 	}
 	
 	

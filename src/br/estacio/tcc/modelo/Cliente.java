@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class Cliente {
 
-	private Long id;
+	private String id;
 	private String nome;
 	private String telefone;
 	private Endereco endereco;
@@ -13,14 +13,15 @@ public class Cliente {
 	private String cpf;
 	private Timestamp dataCadastro;
 	private Boolean ativo;
+	private String registro;
 
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(String string) {
+		this.id = string;
 	}
 
 	public String getNome() {
@@ -71,6 +72,14 @@ public class Cliente {
 		this.cpf = cpf;
 	}
 	
+	public String getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(String registro) {
+		this.registro = registro;
+	}
+
 	public Timestamp getDataCadastro() {
 		return dataCadastro;
 	}

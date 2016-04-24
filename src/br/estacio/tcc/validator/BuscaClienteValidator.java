@@ -25,8 +25,10 @@ public class BuscaClienteValidator implements Validator {
 		Cliente cliente = (Cliente) target;
 		String nome = cliente.getNome();
 		if(!StringUtils.hasLength(nome)){
+			cliente.reset();
 			errors.rejectValue("nome", "required", "Preencha o nome.");
 		} else if (nome.trim().length() < 3) {
+			cliente.reset();
 			errors.rejectValue("nome", "tooShort", "Preencha pelo menos 3 letras.");
 		}
 		

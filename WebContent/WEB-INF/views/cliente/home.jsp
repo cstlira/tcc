@@ -2,16 +2,15 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="res" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SGLE / Cadastro</title>
-<res:resources />
+<jsp:include page="/WEB-INF/views/include/head-include.jsp" />
 </head>
 <body>
-<res:navbar />
+<jsp:include page="/WEB-INF/views/include/navbar.jsp" />
 
             <div class="container">
                 <!-- Page Heading -->
@@ -48,8 +47,8 @@
     				
     				
 					<ul class="nav nav-pills">
-						<li role="presentation" class="<c:out value="${param.tipoCliente=='pf' ? 'active' : ''}" /> <c:out value="${requestScope.active != null ? 'active' : ''}" />"><a href="CadastroCliente?tipoCliente=pf">Pessoa Física</a></li>
-						<li role="presentation" class="<c:out value="${param.tipoCliente=='pj' ? 'active' : ''}"/> "><a href="CadastroCliente?tipoCliente=pj">Pessoa Jurídica</a></li>
+						<li role="presentation" class="<c:out value="${param.tipoCliente=='pf' ? 'active' : ''}" /> <c:out value="${requestScope.active != null ? 'active' : ''}" />"><a href="cliente/cadastro?tipoCliente=pf">Pessoa Física</a></li>
+						<li role="presentation" class="<c:out value="${param.tipoCliente=='pj' ? 'active' : ''}"/> "><a href="cliente/cadastro?tipoCliente=pj">Pessoa Jurídica</a></li>
 					</ul>
 					
 					<br /> <br />

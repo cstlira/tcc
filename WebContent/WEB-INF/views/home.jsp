@@ -7,11 +7,10 @@
 <title>SGL</title>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="res" tagdir="/WEB-INF/tags" %>
-<res:resources />
+<jsp:include page="/WEB-INF/views/include/head-include.jsp" />
 </head>
 <body>
-<res:navbar />
+<jsp:include page="/WEB-INF/views/include/navbar.jsp" />
             <div class="container" id="content">
                 <!-- Page Heading -->
                 <div class="row">

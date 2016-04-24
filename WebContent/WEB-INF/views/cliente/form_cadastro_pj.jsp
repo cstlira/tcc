@@ -16,7 +16,7 @@
 			<br /> <br />
 			
 			<form:form class="form-horizontal"
-				action="CadastroCliente" modelAttribute="cliente"
+				action="cliente/cadastro" modelAttribute="cliente"
 				method="post" id="cadastro">
 				<fieldset>
 					<!-- Form Name -->

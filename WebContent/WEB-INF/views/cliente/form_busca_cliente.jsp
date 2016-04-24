@@ -8,7 +8,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 </head>
-
+<body>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Busca de Clientes</h3>
@@ -16,8 +16,8 @@
 			<br /> <br />
 			
 			<form:form class="form-horizontal"
-				action="BuscaCliente" modelAttribute="cliente"
-				method="post" id="cadastro">
+				action="cliente/busca"
+				method="post" id="cadastro" modelAttribute="cliente">
 				<fieldset>
 					<!-- Form Name -->
 
@@ -27,10 +27,21 @@
 						<div class="col-md-7">
 							<form:input path="nome" name="nome" type="text"
 								placeholder="Digite o nome do cliente"
-								class="form-control input-md" required="" />
+								class="form-control input-md" required=""  id="nome"/>
 
 						</div>
 					</div>
+					
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="nome">CPF/CNPJ*</label>
+						<div class="col-md-7">
+							<form:input path="registro" name="registro" type="text"
+								placeholder="Digite o CPF ou CNPJ do cliente"
+								class="form-control input-md" required="" id="registro" />
+
+						</div>
+					</div>
+					
 
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="submit"></label>
@@ -60,4 +71,13 @@
 
 			</fieldset>
 			</form:form>
+			
+					<div class="form-group">
+					<div class="col-md-offset-4">
+										<a href="cliente/busca?all">Listar todos clientes</a>
+					</div>
+					</div>
+			
 </div>
+</body>
+</html>
