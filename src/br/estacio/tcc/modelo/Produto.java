@@ -6,7 +6,14 @@ public class Produto {
 	private String descricao;
 	private double peso;
 	private int quantidade;
+	private String idCliente;
 	
+	public String getIdCliente() {
+		return idCliente;
+	}
+	public void setIdCliente(String idCliente) {
+		this.idCliente = idCliente;
+	}
 	public int getQuantidade() {
 		return quantidade;
 	}
@@ -31,7 +38,6 @@ public class Produto {
 	public void setPeso(double peso) {
 		this.peso = peso;
 	}
-	
 	
 
 }

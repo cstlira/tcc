@@ -20,20 +20,25 @@
  <div class="row">
  <div class="col-md-8">
 			<!--  Produtos -->
-				<form:form method="post" name="addItensForm" id="addItensForm" modelAttribute="agendamento" action="coleta/agenda/addItemColeta" class="form-horizontal">
+				<form:form method="post" name="addItensForm" id="addItensForm" modelAttribute="produto" action="coleta/agenda/addProduto" class="form-horizontal">
 					<fieldset>	
-					<form:input path="cliente.id" name="idCliente" type="hidden"
-								class="form-control input-md" required="" value="${cliente.id}" />
+
 					<div class="form-group">
+					
+										
+					<form:input path="idCliente" name="idCliente" type="hidden"
+								class="form-control input-md" required="" value="${cliente.id}" />
+					
 						<label class="col-md-2 control-label" for="produto">Produto*</label>
 						<div class="col-md-3">
-							<form:select class="form-control" path="itemColeta.idProduto">
+							<form:select class="form-control" path="id">
     							<form:options items="${listaProdutos}" />
 							</form:select>
 						</div>
+						
 						<label class="col-md-1 control-label" for="produto">Qtd*</label>
 						<div class="col-md-2">
-							<form:input path="itemColeta.quantidade" name="qtd" type="number"
+							<form:input path="quantidade" name="qtd" type="number"
 								placeholder="Qtd."
 								class="form-control input-md" required="" min="0"/>
 						</div>
@@ -76,34 +81,33 @@
 				</fieldset>
 		</form:form>	
 	</div>
-
-
-<div class="col-md-4">
- <table class="table table-hover">
+	<div class="col-md-4">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Item</th>
         <th>Quantidade</th>
-        <th>Peso total</th>
+        <th>Peso total </th>
       </tr>
     </thead>
     <tbody>
-      <c:forEach var="item" items="${itensAdicionados}">
-      <c:if test="${item.idCliente == cliente.id}">
+    
+
+<c:forEach var="entry" items="${itensColeta}">
         <tr>
-        <td><c:out value="${item.descricao}" /></td>
-        <td><c:out value="${item.quantidade}" /></td>
-        <td><c:out value="${item.peso}" /></td>
+        <td>${entry.descricao}</td>
+        <td>${entry.quantidade}</td>
+        <td>${entry.peso * entry.quantidade}</td>
       </tr>
-      </c:if>
-      </c:forEach>
+      
+      
+</c:forEach>
     </tbody>
   </table>
-</div>
+	</div>
 	
-	
 </div>
-			
+
 </div>
 </div>
 </body>

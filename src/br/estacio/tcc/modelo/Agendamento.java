@@ -1,10 +1,6 @@
 package br.estacio.tcc.modelo;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import org.springframework.util.AutoPopulatingList;
 
 public class Agendamento {
 	
@@ -13,41 +9,12 @@ public class Agendamento {
 	private Cliente cliente;
 	private String descricao;
 	private boolean efetuada;
-	private ItemColeta itemColeta;
-	private int numItens;
-	private List<ItemColeta> itensColetados;
-	
-	public List<ItemColeta> getItensColetados() {
-		return itensColetados;
-	}
 
-
-	public void setItensColetados(List<ItemColeta> itensColetados) {
-		this.itensColetados = itensColetados;
-	}
 
 
 	public Agendamento() {
 	}
-	
-	
-	public ItemColeta getItemColeta() {
-		return itemColeta;
-	}
 
-	public void setItemColeta(ItemColeta itemColeta) {
-		this.itemColeta = itemColeta;
-	}
-	
-	public int getNumItens() {
-		return numItens;
-	}
-
-	public void setNumItens(int numItens) {
-		this.numItens = numItens;
-	}
-
-	
 	public Long getId() {
 		return id;
 	}

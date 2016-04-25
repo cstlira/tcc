@@ -1,19 +1,16 @@
 package br.estacio.tcc.controller;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,14 +20,14 @@ import br.estacio.tcc.dao.JdbcClienteDao;
 import br.estacio.tcc.dao.JdbcProdutoDao;
 import br.estacio.tcc.modelo.Agendamento;
 import br.estacio.tcc.modelo.Cliente;
-import br.estacio.tcc.modelo.ItemColeta;
+import br.estacio.tcc.modelo.Coleta;
 import br.estacio.tcc.modelo.Produto;
 
 @Controller
 @RequestMapping("coleta")
 public class ColetaController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ClienteController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ColetaController.class);
 	
 	@Autowired
 	JdbcClienteDao clienteDao;
@@ -38,18 +35,16 @@ public class ColetaController {
 	@Autowired
 	JdbcProdutoDao produtoDao;
 	
+	@Autowired
+	Coleta coleta;
+	
 	@RequestMapping(value = "agenda/{id}", method=RequestMethod.GET)
 	public String agendaColeta(Model model, @PathVariable String id){
-		model.addAttribute("cliente", clienteDao.buscaClientePorId(id));
+		Cliente cliente = clienteDao.buscaClientePorId(id);
+		model.addAttribute("cliente", cliente);
+		model.addAttribute("itensColeta", coleta.getProdutos(cliente.getId()));
 		model.addAttribute("agendamento", new Agendamento());
-		model.addAttribute("numItens",0);
-		
-		Map<String,String> listaProdutos = new LinkedHashMap<String,String>();
-		for(Produto produto : produtoDao.listaProdutos()) {
-			listaProdutos.put(String.valueOf(produto.getId()), produto.getDescricao());
-		}
-		
-		model.addAttribute("listaProdutos",listaProdutos); 
+		model.addAttribute("produto", new Produto());
 		return "coleta/agendamento";
 	}
 	
@@ -64,51 +59,29 @@ public class ColetaController {
 	
 	
 	
-	@RequestMapping(value = "agenda/addItemColeta", method=RequestMethod.POST)
-	public String addItem(Model model, Agendamento agendamento, RedirectAttributes redirectAttributes, HttpSession session){
-		
-			//Retira o item do objeto Agendamento com ID do Produto a ser coletado e quantidade.
-			ItemColeta itemColeta = agendamento.getItemColeta();
-
-			//Calcula o pesoTotal e configura no objeto.
-			
-			//Busca o produto no banco de dados para saber o peso unitário.
-			Produto produto = produtoDao.buscaProdutoPorId(itemColeta.getIdProduto());
-			
-			//Multiplica o peso unitário do produto pela quantidade a ser coletada do mesmo e configura no item
-			BigDecimal pesoTotal = new BigDecimal(produto.getPeso()*itemColeta.getQuantidade()).setScale(2, RoundingMode.HALF_EVEN);
-			itemColeta.setPeso(pesoTotal.doubleValue());
-			
-			//Seta ID do cliente
-			itemColeta.setIdCliente(agendamento.getCliente().getId());
-			
-			//Seta Descricao
-			itemColeta.setDescricao(produto.getDescricao());
-			//Volta o objeto agendamento para o form com o arraylist incrementado.
-
-			if(session.getAttribute("itensAdicionados")==null){
-			List<ItemColeta> itensAdicionados = new ArrayList<ItemColeta>();
-			itensAdicionados.add(itemColeta);
-			session.setAttribute("itensAdicionados", itensAdicionados);
-			} 
-			
-			else {
-			@SuppressWarnings("unchecked")
-			List<ItemColeta> itensAdicionados = (List<ItemColeta>) session.getAttribute("itensAdicionados");
-			for(int i = 0; i<itensAdicionados.size(); i++){
-				ItemColeta item = itensAdicionados.get(i);
-				if(item.getIdProduto()==itemColeta.getIdProduto()) {
-					itensAdicionados.remove(i);
-				}
-			}
-			itensAdicionados.add(itemColeta);
-			session.setAttribute("itensAdicionados", itensAdicionados);
-			agendamento.setItensColetados(itensAdicionados);
-			}
-			
-			redirectAttributes.addFlashAttribute("agendamento",agendamento);
-			
-			return "redirect:"+agendamento.getCliente().getId();
+	@RequestMapping(value = "agenda/addProduto", method=RequestMethod.POST)
+	public String addProduto(Model model, Produto produto, RedirectAttributes redirectAttributes){
+		Produto p = produtoDao.buscaProdutoPorId(produto.getId());
+		produto.setDescricao(p.getDescricao());
+		BigDecimal peso = new BigDecimal(String.valueOf(p.getPeso())).setScale(2, BigDecimal.ROUND_HALF_UP);
+		produto.setPeso(peso.doubleValue());
+		coleta.addProduto(produto.getIdCliente(), produto);
+		logger.debug("Adicionando produto à coleta: "+produto.getQuantidade()+" - "+produto.getDescricao());
+		logger.debug("Cliente: "+produto.getIdCliente());
+		logger.debug("Coleta: "+coleta);
+		List<Produto> itensColeta = coleta.getProdutos(produto.getIdCliente());
+		redirectAttributes.addFlashAttribute("itensColeta",itensColeta);
+		return "redirect:"+produto.getIdCliente();
 	}
 	
+	@ModelAttribute("listaProdutos")
+	public Map<String,String> listaProdutos() {
+		Map<String,String> listaProdutos = new HashMap<String,String>();
+		for(Produto produto : produtoDao.listaProdutos()) {
+			listaProdutos.put(String.valueOf(produto.getId()), produto.getDescricao());
+		}
+		return listaProdutos;
+	}
+	
+
 }
